@@ -19,12 +19,12 @@ notebooks/.ipynb_checkpoints/
 # Data & models
 
 
-Data/*
-Data/valid/
-Data/test/
+# Data & models
+data/
 models/*.pt
 models/*.onnx
 models/*.engine
+
 
 # Supabase credentials / environment files
 .env
