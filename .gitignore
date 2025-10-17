@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.pkl.gz
+*.log
+
+# Environment / uv
+.venv/
+.uv/
+uv.lock
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# Data & models
+
+
+Data/*
+Data/valid/
+Data/test/
+models/*.pt
+models/*.onnx
+models/*.engine
+
+# Supabase credentials / environment files
+.env
+.env.*
+
+# Streamlit & cache
+.streamlit/
+.streamlit-secrets.toml
+.streamlit/config.toml
+
+# System
+.DS_Store
+Thumbs.db
+
+# VS Code / IDE
+.vscode/
+.idea/
