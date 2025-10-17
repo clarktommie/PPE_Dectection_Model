@@ -24,7 +24,7 @@ data/
 models/*.pt
 models/*.onnx
 models/*.engine
-
+runs/
 
 # Supabase credentials / environment files
 .env
