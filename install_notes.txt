@@ -1,0 +1,3 @@
+install notes:
+
+uv install --python 3.12
