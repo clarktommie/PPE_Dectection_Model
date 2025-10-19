@@ -46,3 +46,6 @@ Thumbs.db
 #videos
 
 test_videos/
+
+# images
+test_images/
