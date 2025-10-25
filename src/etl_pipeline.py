@@ -1,15 +1,5 @@
 from ultralytics import YOLO
 import json, os, datetime
-from supabase import create_client, Client
-
-from dotenv import load_dotenv
-load_dotenv()
-
-
-# initialize supabase connection
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_KEY")
-supabase: Client = create_client(url, key)
 
 def run_etl(model_path="runs/train/ppe_yolov8/weights/best.pt", source=None, conf=0.25):
     if source is None or not os.path.exists(source):
@@ -26,9 +16,8 @@ def run_etl(model_path="runs/train/ppe_yolov8/weights/best.pt", source=None, con
             "timestamp": datetime.datetime.now().isoformat()
         })
 
-    data = {"source": source, "detections": detections}
-    supabase.table("ppe_detections").insert(data).execute()
-    print(f"✅ {len(detections)} detections uploaded to Supabase.")
+    print(f"✅ {len(detections)} detections found.")
+    print(json.dumps(detections, indent=2))
 
 if __name__ == "__main__":
     path = input("Enter path to image or video: ").strip()

@@ -1,3 +1,65 @@
-install notes:
+# -------------------------------
+# PPE Detection Project - Install & Usage Notes
+# -------------------------------
 
+## 1. Environment Setup
 uv install --python 3.12
+
+## 2. Install Dependencies
+uv add ultralytics opencv-python matplotlib pyyaml
+uv add supabase
+uv add python-dotenv
+uv add streamlit
+
+## 3. Optional: Verify GPU and YOLO Setup
+uv run python -c "import torch; print(torch.cuda.is_available())"
+uv run yolo info
+
+## 4. .gitignore (recommended)
+Data/
+runs/
+test_videos/
+models/
+*.pt
+*.avi
+*.mp4
+.env
+
+## 5. Convert Video Files to MP4 (optional)
+ffmpeg -i "PATH/TO/INPUT_FILE.avi" -vcodec h264 -crf 18 "PATH/TO/OUTPUT_FILE.mp4"
+
+## 6. Supabase Setup
+# create table in SQL editor:
+create table ppe_detections (
+  id uuid primary key default gen_random_uuid(),
+  source text,
+  detections jsonb,
+  inserted_at timestamp default now()
+);
+
+# add environment variables (.env file in project root)
+SUPABASE_URL="https://yourproject.supabase.co"
+SUPABASE_KEY="your-anon-key"
+
+# load variables in your script
+from dotenv import load_dotenv
+load_dotenv()
+
+## 7. Train Model
+uv run python src/train_model.py
+
+## 8. Validate Model on Test Set
+uv run yolo val model=runs/train/ppe_yolov8/weights/best.pt data=data/data.yaml
+
+## 9. Run Inference / ETL Pipeline
+uv run python src/etl_pipeline.py
+
+## 10. Launch Streamlit App
+uv run streamlit run src/streamlit_app.py
+
+# note: video processing may take time depending on length and resolution
+
+
+# secrets stored in modal
+modal secret create supabase_secrets SUPABASE_URL="your-url" SUPABASE_KEY="your-key"
+
