@@ -15,7 +15,12 @@ tempfile.tempdir = "/tmp"
 # ------------------------------------------------------------------
 # Setup
 # ------------------------------------------------------------------
-load_dotenv("/home/tclark/Data Science/multimodal_PPE_dectection/.env")
+# Get the directory of this script (works on any system)
+BASE_DIR = Path(__file__).resolve().parent.parent  # go up from src/ to project root
+ENV_PATH = BASE_DIR / ".env"
+
+# Load .env file dynamically
+load_dotenv(ENV_PATH)
 
 warnings.filterwarnings("ignore")
 logging.getLogger("urllib3").setLevel(logging.CRITICAL)
